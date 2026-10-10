@@ -5,7 +5,8 @@ end
 local BASE = "https://raw.githubusercontent.com/AriseScript/AZ/refs/heads/main/"
 
 local games = {
-    [861404864] = "script.lua"
+    [861404864] = "script.lua",
+    [6042520] = "99.lua"
 }
 
 local file = games[game.CreatorId]
