@@ -8,7 +8,8 @@ local games = {
     [861404864] = "script.lua",
     [6042520] = "99.lua",
     [33017480] = "AD.lua",
-    [825735094] = "SAE.lua"
+    [825735094] = "SAE.lua",
+    [169690820] = "CAF.lua
 }
 
 local file = games[game.CreatorId]
