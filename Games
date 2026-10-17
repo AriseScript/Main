@@ -11,7 +11,7 @@ local BASE =
     "https://raw.githubusercontent.com/AriseScript/AZ/refs/heads/main/"
 
 local games = {
-    [169690820] = "CA.lua"
+    [169690820] = "CA.lua",
     [861404864] = "script.lua",
     [6042520] = "99.lua",
     [33017480] = "AD.lua",
