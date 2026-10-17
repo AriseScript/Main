@@ -1,4 +1,4 @@
-```lua
+
 -- ==========================================
 -- ARISE SCRIPTS - DIAGNOSTIC LOADER
 -- ==========================================
@@ -75,4 +75,4 @@ end)
 if not success then
     warn("[Arise Loader] " .. tostring(err))
 end
-```
+
