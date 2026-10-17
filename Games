@@ -1,8 +1,14 @@
+```lua
+-- ==========================================
+-- ARISE SCRIPTS - DIAGNOSTIC LOADER
+-- ==========================================
+
 if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-local BASE = "https://raw.githubusercontent.com/AriseScript/AZ/refs/heads/main/"
+local BASE =
+    "https://raw.githubusercontent.com/AriseScript/AZ/refs/heads/main/"
 
 local games = {
     [861404864] = "script.lua",
@@ -14,18 +20,59 @@ local games = {
 
 local file = games[game.CreatorId]
 
-if file then
-    local success, err = pcall(function()
-        local source = game:HttpGet(BASE .. file)
-        local execute = loadstring(source)
-
-        assert(execute, "Failed to compile Script.lua")
-        execute()
-    end)
-
-    if not success then
-        warn("Loader error: " .. tostring(err))
-    end
-else
-    warn("No script configured for Creator ID: " .. tostring(game.CreatorId))
+if not file then
+    warn("[Arise] No script configured for Creator ID: "
+        .. tostring(game.CreatorId))
+    return
 end
+
+local url = BASE .. file
+
+print("[Arise] Loading: " .. file)
+print("[Arise] URL: " .. url)
+
+local success, err = pcall(function()
+    -- Download source
+    local source = game:HttpGet(url)
+
+    if type(source) ~= "string" or #source == 0 then
+        error("Downloaded source is empty.", 0)
+    end
+
+    print("[Arise] Downloaded " .. #source .. " characters.")
+
+    -- Detect an HTML response instead of Lua
+    if source:match("^%s*<!DOCTYPE")
+        or source:match("^%s*<html") then
+        error(
+            "The URL returned HTML instead of Lua. Check the raw URL.",
+            0
+        )
+    end
+
+    -- Compile and preserve the real compiler error
+    local execute, compileError =
+        loadstring(source, "@" .. file)
+
+    if type(execute) ~= "function" then
+        warn("[Arise] Compilation failed for " .. file)
+        warn("[Arise] Source length: " .. tostring(#source))
+        warn("[Arise] Source preview: "
+            .. source:sub(1, 150):gsub("[%c]", " "))
+
+        error(
+            "Compiler details: " .. tostring(compileError),
+            0
+        )
+    end
+
+    print("[Arise] Compilation successful.")
+
+    -- Execute compiled script
+    execute()
+end)
+
+if not success then
+    warn("[Arise Loader] " .. tostring(err))
+end
+```
