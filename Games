@@ -11,7 +11,8 @@ local games = {
     [825735094] = "SAE.lua",
     [169690820] = "CA.lua",
     [35881183] = "TSR.lua",
-   [281831224] = "HV.lua"
+   [281831224] = "HV.lua",
+   [279288859] = "SFAN.lua"
 }
 
 local file = games[game.CreatorId]
